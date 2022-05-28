@@ -1,0 +1,20 @@
+{
+  "name": "Inter-Bridge-Visualizer",
+  "version": "0.1.0",
+  "author": "Verumlotus",
+  "license": "MIT",
+  "description": "nalytics and insights for data aggregated from multiple bridges and chains.",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "compile": "npx tsc",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/verumlotus/Inter-Bridge-Visualizer"
+  }
+}
