@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as bridgeJson from "../constants/bridges.json";
-import { defiLlamaProtocolEndpoint } from './../constants/endpoints';
+import { defiLlamaProtocolEndpoint } from '../constants/endpoints';
+import {logJson} from "./debugUtils";
 
 /**
  * @notice fetches the data for a given bridge
@@ -12,7 +13,13 @@ async function fetchBridgeData(bridge: string) {
     return response.data;
 }
 
-async function fetchAllBridgeData(bridges: string[]) {
+/**
+ * Returns object with bridgeName: data object
+ * @param bridges 
+ * 
+ * @returns 
+ */
+async function fetchAllBridgeData(bridges: string[]) : Promise<{}> {
     let bridgeData = {};
     const _data = await Promise.all(bridges.map(fetchBridgeData))
     // Format and clean data a bit 
@@ -24,6 +31,15 @@ async function fetchAllBridgeData(bridges: string[]) {
         }
     }
     return bridgeData;
+}
+
+/**
+ * @notice parses bridgeData to return historical TVL per bridge
+ * @param bridgeData 
+ * 
+ */
+function totalBridgeTvl(bridgeData): {} {
+    
 }
 
 fetchAllBridgeData(bridgeJson.bridges);
