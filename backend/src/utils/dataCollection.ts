@@ -14,20 +14,20 @@ async function fetchBridgeData(bridge: string) {
 }
 
 /**
- * Returns object with bridgeName: data object
+ * Returns array of elements with bridge data
  * @param bridges 
  * 
  * @returns 
  */
-async function fetchAllBridgeData(bridges: string[]) : Promise<{}> {
-    let bridgeData = {};
+async function fetchAllBridgeData(bridges: string[]) : Promise<{}[]> {
+    let bridgeData = [];
     const _data = await Promise.all(bridges.map(fetchBridgeData))
     // Format and clean data a bit 
     for (const obj of _data) {
         if ('statusCode' in obj && obj.statusCode != 200) {
             // TODO: Sentry logging here
         } else {
-            bridgeData[obj.name] = obj;
+            bridgeData.push(obj);
         }
     }
     return bridgeData;
@@ -38,8 +38,23 @@ async function fetchAllBridgeData(bridges: string[]) : Promise<{}> {
  * @param bridgeData 
  * 
  */
-function totalBridgeTvl(bridgeData): {} {
-    
+function totalAllBridgeTvl(bridgeData): {} {
+    let bridgeTotalTvl = {}
+    for (const bridgeInfo of bridgeData) {
+        bridgeTotalTvl[bridgeInfo.name] = {
+            "name": bridgeInfo.name,
+            "tvl": bridgeInfo.tvl
+        }
+        console.log(`Lenght of TVL is ${bridgeInfo.tvl.length}`)
+    }
+    return bridgeTotalTvl;
 }
 
-fetchAllBridgeData(bridgeJson.bridges);
+async function runner() {
+    const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
+    const bridgeTotal = totalAllBridgeTvl(bridgeData);
+    logJson(bridgeTotal)
+}
+
+runner();
+
