@@ -60,7 +60,7 @@ function cleanBridgeInfo(bridgeInfo) {
  * @param bridgeData {}[]
  * @returns bridge TVL, {}[]
  */
-function totalAllBridgeTvl(bridgeData): {} {
+function getTvlByBridge(bridgeData): {} {
     let bridgeTotalTvl = []
     for (const bridgeInfo of bridgeData) {
         bridgeTotalTvl.push({
@@ -76,7 +76,7 @@ function totalAllBridgeTvl(bridgeData): {} {
  * @param bridgeData 
  * @returns a json object with keys as the chain and historical data for the TVL of the entire chain across bridges
  */
-function totalTvlByChain(bridgeData) {
+function getTvlByChain(bridgeData) {
     let tvlByChain = {}
     for (const bridgeInfo of bridgeData) {
         for (const chain in bridgeInfo.chainTvls) {
@@ -100,7 +100,7 @@ function totalTvlByChain(bridgeData) {
 
 async function runner() {
     const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
-    const bridgeTotal = totalTvlByChain(bridgeData);
+    const bridgeTotal = getTvlByChain(bridgeData);
     logJson(bridgeTotal)
 }
 
