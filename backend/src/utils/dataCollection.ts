@@ -30,7 +30,6 @@ async function fetchAllBridgeData(bridges: string[]) : Promise<{}[]> {
         } else {
             cleanBridgeInfo(bridgeInfo);
             bridgeData.push(bridgeInfo);
-            console.log(`Lengths are: tvl ${bridgeInfo.tvl.length}, tvl nested ${bridgeInfo.chainTvls['Ethereum'].tvl.length}`);
             
         }
     }
@@ -75,21 +74,34 @@ function totalAllBridgeTvl(bridgeData): {} {
 /**
  * Will aggregate TVL per chain across all bridges
  * @param bridgeData 
- * 
+ * @returns a json object with keys as the chain and historical data for the TVL of the entire chain across bridges
  */
 function totalTvlByChain(bridgeData) {
     let tvlByChain = {}
     for (const bridgeInfo of bridgeData) {
-        for (const chainTvl of bridgeInfo.chainTvls) {
-            
+        for (const chain in bridgeInfo.chainTvls) {
+            if (!(chain in tvlByChain)) {
+                tvlByChain[chain] = {}
+            }
+            const chainInfo = bridgeInfo.chainTvls[chain]
+            for (const tvlPerDateInfo of chainInfo.tvl) {
+                if (!(tvlPerDateInfo.date in tvlByChain[chain])) {
+                    // We need to add the date and an initial TVL of 0
+                    tvlByChain[chain][tvlPerDateInfo.date]= {}
+                    tvlByChain[chain][tvlPerDateInfo.date]['aggregateTvl'] = 0
+                }
+                tvlByChain[chain][tvlPerDateInfo.date]['aggregateTvl'] += tvlPerDateInfo.totalLiquidityUSD
+            }
         }
     }
+    return tvlByChain
 }
 
 
 async function runner() {
     const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
-    const bridgeTotal = totalAllBridgeTvl(bridgeData);
+    const bridgeTotal = totalTvlByChain(bridgeData);
+    logJson(bridgeTotal)
 }
 
 runner();
