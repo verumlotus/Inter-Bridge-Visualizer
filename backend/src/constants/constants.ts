@@ -1,0 +1,1 @@
+export const TVL_TIMEFRAME = 90;

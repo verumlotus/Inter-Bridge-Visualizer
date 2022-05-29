@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as bridgeJson from "../constants/bridges.json";
 import { defiLlamaProtocolEndpoint } from '../constants/endpoints';
+import { TVL_TIMEFRAME } from "../constants/constants";
 import {logJson} from "./debugUtils";
 
 /**
@@ -35,17 +36,17 @@ async function fetchAllBridgeData(bridges: string[]) : Promise<{}[]> {
 
 /**
  * @notice parses bridgeData to return historical TVL per bridge
- * @param bridgeData 
- * 
+ * @param bridgeData {}[]
+ * @returns bridge TVL, {}[]
  */
 function totalAllBridgeTvl(bridgeData): {} {
-    let bridgeTotalTvl = {}
+    let bridgeTotalTvl = []
     for (const bridgeInfo of bridgeData) {
-        bridgeTotalTvl[bridgeInfo.name] = {
+        bridgeTotalTvl.push({
             "name": bridgeInfo.name,
-            "tvl": bridgeInfo.tvl
-        }
-        console.log(`Lenght of TVL is ${bridgeInfo.tvl.length}`)
+            // Keep the last TVL_Timeframe data points, excluding the last datapoint
+            "tvl": bridgeInfo.tvl.slice(Math.max(0, bridgeInfo.tvl.length - TVL_TIMEFRAME - 1), bridgeInfo.tvl.length - 1)
+        })
     }
     return bridgeTotalTvl;
 }
