@@ -24,14 +24,36 @@ async function fetchAllBridgeData(bridges: string[]) : Promise<{}[]> {
     let bridgeData = [];
     const _data = await Promise.all(bridges.map(fetchBridgeData))
     // Format and clean data a bit 
-    for (const obj of _data) {
-        if ('statusCode' in obj && obj.statusCode != 200) {
+    for (const bridgeInfo of _data) {
+        if ('statusCode' in bridgeInfo && bridgeInfo.statusCode != 200) {
             // TODO: Sentry logging here
         } else {
-            bridgeData.push(obj);
+            cleanBridgeInfo(bridgeInfo);
+            bridgeData.push(bridgeInfo);
+            console.log(`Lengths are: tvl ${bridgeInfo.tvl.length}, tvl nested ${bridgeInfo.chainTvls['Ethereum'].tvl.length}`);
+            
         }
     }
     return bridgeData;
+}
+
+/**
+ * Parses & clean bridge info (e.g. truncating arrays to appropriate values)
+ * @param bridgeInfo 
+ */
+function cleanBridgeInfo(bridgeInfo) {
+    // Truncate TOP-level 'tvl', 'tokensinUSD', and 'tokens'
+    // Keep the last TVL_TIMEFRAME elements, excluding the last element
+    bridgeInfo.tvl = bridgeInfo.tvl.slice(Math.max(0, bridgeInfo.tvl.length - TVL_TIMEFRAME - 1), -1)
+    bridgeInfo.tokensInUsd = bridgeInfo.tokensInUsd.slice(Math.max(0, bridgeInfo.tokensInUsd.length - TVL_TIMEFRAME - 1), -1)
+    bridgeInfo.tokens = bridgeInfo.tokens.slice(Math.max(0, bridgeInfo.tokens.length - TVL_TIMEFRAME - 1), -1)
+    // For each chain with 'chainTvls', do the same thing
+    for (const chain in bridgeInfo.chainTvls) {
+        const chainInfo = bridgeInfo.chainTvls[chain]
+        chainInfo.tvl = chainInfo.tvl.slice(Math.max(0, chainInfo.tvl.length - TVL_TIMEFRAME - 1), -1)
+        chainInfo.tokensInUsd = chainInfo.tokensInUsd.slice(Math.max(0, chainInfo.tokensInUsd.length - TVL_TIMEFRAME - 1), -1)
+        chainInfo.tokens = chainInfo.tokens.slice(Math.max(0, chainInfo.tokens.length - TVL_TIMEFRAME - 1), -1)
+    }
 }
 
 /**
@@ -44,17 +66,30 @@ function totalAllBridgeTvl(bridgeData): {} {
     for (const bridgeInfo of bridgeData) {
         bridgeTotalTvl.push({
             "name": bridgeInfo.name,
-            // Keep the last TVL_Timeframe data points, excluding the last datapoint
-            "tvl": bridgeInfo.tvl.slice(Math.max(0, bridgeInfo.tvl.length - TVL_TIMEFRAME - 1), bridgeInfo.tvl.length - 1)
+            "tvl": bridgeInfo.tvl
         })
     }
     return bridgeTotalTvl;
 }
 
+/**
+ * Will aggregate TVL per chain across all bridges
+ * @param bridgeData 
+ * 
+ */
+function totalTvlByChain(bridgeData) {
+    let tvlByChain = {}
+    for (const bridgeInfo of bridgeData) {
+        for (const chainTvl of bridgeInfo.chainTvls) {
+            
+        }
+    }
+}
+
+
 async function runner() {
     const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
     const bridgeTotal = totalAllBridgeTvl(bridgeData);
-    logJson(bridgeTotal)
 }
 
 runner();
