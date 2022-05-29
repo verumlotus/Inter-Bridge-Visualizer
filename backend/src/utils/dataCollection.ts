@@ -97,10 +97,26 @@ function getTvlByChain(bridgeData) {
     return tvlByChain
 }
 
+/**
+ * For every chain, will breakdown how much TVL comes from which bridges
+ * @param bridgeData 
+ */
+function getTvlSingleChainSplitByBridge(bridgeData) {
+    let chainTvlByBridge = {}
+    for (const bridgeInfo of bridgeData) {
+        for (const chain in bridgeInfo.chainTvls) {
+            if (!(chain in chainTvlByBridge)) {
+                chainTvlByBridge[chain] = {}
+            }
+            chainTvlByBridge[chain][bridgeInfo.name] = bridgeInfo.chainTvls[chain].tvl
+        }
+    }
+    return chainTvlByBridge;
+}
 
 async function runner() {
     const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
-    const bridgeTotal = getTvlByChain(bridgeData);
+    const bridgeTotal = getTvlSingleChainSplitByBridge(bridgeData);
     logJson(bridgeTotal)
 }
 
