@@ -44,23 +44,30 @@ function fmtGetTvlByChain(tvlByChain): NivoLine[] {
 }
 
 /**
- * Formats a SINGLE chain in getTvlByChain
- * @param chainTvlByBridgeSingleInfo 
+ * Formats getTvlByChain
+ * @param chainTvlByBridge 
  */
-function fmtSingleGetTvlSingleChainSplitByBridge(chainTvlByBridgeSingleInfo): NivoLine[] {
-    let nivoLines: NivoLine[] = []
-    for (const bridge in chainTvlByBridgeSingleInfo) {
-        let nivoData: NivoLine["data"] = []
-        for (const dateAndTvlInfo of chainTvlByBridgeSingleInfo[bridge]) {
-            nivoData.push({
-                "x": Number(dateAndTvlInfo.date), 
-                "y": dateAndTvlInfo.totalLiquidityUSD.toFixed(2)
-            })
+function fmtGetTvlSingleChainSplitByBridge(chainTvlByBridge) {
+    let result = []
+    for (const chain in chainTvlByBridge) {
+        const chainTvlByBridgeSingleInfo = chainTvlByBridge[chain]
+        let nivoLines: NivoLine[] = []
+        for (const bridge in chainTvlByBridgeSingleInfo) {
+            let nivoData: NivoLine["data"] = []
+            for (const dateAndTvlInfo of chainTvlByBridgeSingleInfo[bridge]) {
+                nivoData.push({
+                    "x": Number(dateAndTvlInfo.date), 
+                    "y": dateAndTvlInfo.totalLiquidityUSD.toFixed(2)
+                })
+            }
+            let nivoLine = {"id": bridge, "data": nivoData}
+            nivoLines.push(nivoLine)
         }
-        let nivoLine = {"id": bridge, "data": nivoData}
-        nivoLines.push(nivoLine)
+        result.push({
+            [chain]: nivoLines
+        })
     }
-    return nivoLines
+    return result
 }
 
 /**
@@ -127,13 +134,8 @@ function fmtSingleGetTvlSingleChainSplitByAsset(chainTvlByAssetSingleInfo): Nivo
 async function runner() {
     const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
     let bridgeTotal = getTvlSingleChainSplitByBridge(bridgeData);
-    let result = []
-    for (const chain in bridgeTotal) {
-        result.push({
-            chain: fmtSingleGetTvlSingleChainSplitByBridge(bridgeTotal[chain])
-        })
-    }
-    logJson(result)
+    bridgeTotal = fmtGetTvlSingleChainSplitByBridge(bridgeTotal)
+    logJson(bridgeTotal)
 }
 
 runner();
