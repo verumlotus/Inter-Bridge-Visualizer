@@ -17,6 +17,46 @@ type TvlByChainData {
   y String
 }
 
+type TvlSingleAssetByBridgeBridgeTvlData {
+  data TvlSingleAssetByBridgeBridgeTvlDataData[]
+  id   String
+}
+
+type TvlSingleAssetByBridgeBridgeTvlDataData {
+  x Int
+  y String
+}
+
+type TvlSingleAssetByChainChainTvlData {
+  data TvlSingleAssetByChainChainTvlDataData[]
+  id   String
+}
+
+type TvlSingleAssetByChainChainTvlDataData {
+  x Int
+  y String
+}
+
+type TvlSingleChainSplitByAssetAssetTvlData {
+  data TvlSingleChainSplitByAssetAssetTvlDataData[]
+  id   String
+}
+
+type TvlSingleChainSplitByAssetAssetTvlDataData {
+  x Int
+  y String
+}
+
+type TvlSingleChainSplitByBridgeBridgeTvlData {
+  data TvlSingleChainSplitByBridgeBridgeTvlDataData[]
+  id   String
+}
+
+type TvlSingleChainSplitByBridgeBridgeTvlDataData {
+  x Int
+  y String
+}
+
 model TvlByBridge {
   id   String            @id @default(auto()) @map("_id") @db.ObjectId
   data TvlByBridgeData[]
@@ -27,4 +67,28 @@ model TvlByChain {
   id   String           @id @default(auto()) @map("_id") @db.ObjectId
   data TvlByChainData[]
   id_  String           @map("id")
+}
+
+model TvlSingleAssetByBridge {
+  id            String                                @id @default(auto()) @map("_id") @db.ObjectId
+  asset         String
+  bridgeTvlData TvlSingleAssetByBridgeBridgeTvlData[]
+}
+
+model TvlSingleAssetByChain {
+  id           String                              @id @default(auto()) @map("_id") @db.ObjectId
+  asset        String
+  chainTvlData TvlSingleAssetByChainChainTvlData[]
+}
+
+model TvlSingleChainSplitByAsset {
+  id           String                                   @id @default(auto()) @map("_id") @db.ObjectId
+  assetTvlData TvlSingleChainSplitByAssetAssetTvlData[]
+  chain        String
+}
+
+model TvlSingleChainSplitByBridge {
+  id            String                                     @id @default(auto()) @map("_id") @db.ObjectId
+  bridgeTvlData TvlSingleChainSplitByBridgeBridgeTvlData[]
+  chain         String
 }
