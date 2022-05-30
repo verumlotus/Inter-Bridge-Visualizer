@@ -9,7 +9,7 @@ datasource db {
 
 type TvlByBridgeData {
   x Int
-  y Float
+  y String
 }
 
 type TvlByChainData {
