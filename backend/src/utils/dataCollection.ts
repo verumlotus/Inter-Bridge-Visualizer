@@ -145,9 +145,42 @@ function getTvlSingleChainSplitByAsset(bridgeData) {
     return chainTvlByAsset
 }
 
+/**
+ * For every asset, will breakdown the TVL by bridge
+ * @param bridgeData 
+ * @returns 
+ */
+function getTvlSingleAssetByBridge(bridgeData) {
+    let assetTvlByBridge = {}
+    for (const bridgeInfo of bridgeData) {
+        for (const chain in bridgeInfo.chainTvls) {
+            const chainInfo = bridgeInfo.chainTvls[chain]
+            for (const tvlByTokenPerDate of chainInfo.tokensInUsd) {
+                // Loop through all the tokens 
+                for (const token in tvlByTokenPerDate.tokens) {
+                    // Check if the tokens exist in our mapping
+                    if (!(token in assetTvlByBridge)) {
+                        assetTvlByBridge[token] = {}
+                    }
+                    // Check if we've seen this bridge before for this specific asset
+                    if (!(bridgeInfo.name in assetTvlByBridge[token])) {
+                        assetTvlByBridge[token][bridgeInfo.name] = {}
+                    }
+                    // Check if we've seen the date before
+                    if (!(tvlByTokenPerDate.date in assetTvlByBridge[token][bridgeInfo.name])) {
+                        assetTvlByBridge[token][bridgeInfo.name][tvlByTokenPerDate.date] = 0
+                    }
+                    assetTvlByBridge[token][bridgeInfo.name][tvlByTokenPerDate.date] += tvlByTokenPerDate.tokens[token]
+                }
+            }
+        }
+    }
+    return assetTvlByBridge
+}
+
 async function runner() {
     const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
-    const bridgeTotal = getTvlSingleChainSplitByAsset(bridgeData);
+    const bridgeTotal = getTvlSingleAssetByBridge(bridgeData);
     logJson(bridgeTotal)
 }
 
