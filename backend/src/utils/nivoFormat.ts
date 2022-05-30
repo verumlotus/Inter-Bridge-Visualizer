@@ -84,9 +84,31 @@ function fmtSingleGetTvlSingleChainSplitByAsset(chainTvlByAssetSingleInfo): Nivo
 
 }
 
+/**
+ * Formats a SINGLE asset in getTvlSingleAssetByBridge
+ * @param assetTvlByBridgeSingleInfo 
+ */
+ function fmtSingleGetTvlSingleAssetByBridge(assetTvlByBridgeSingleInfo): NivoLine[] {
+    let nivoLines: NivoLine[] = []
+    for (const bridge in assetTvlByBridgeSingleInfo) {
+        let nivoData: NivoLine["data"] = []
+        for (const date in assetTvlByBridgeSingleInfo[bridge]) {
+            nivoData.push({
+                "x": Number(date), 
+                "y": assetTvlByBridgeSingleInfo[bridge][date]
+            })
+        }
+        let nivoLine = {"id": bridge, "data": nivoData}
+        nivoLines.push(nivoLine)
+    }
+    return nivoLines
+
+}
+
+
 async function runner() {
     const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
-    let bridgeTotal = getTvlSingleChainSplitByAsset(bridgeData);
+    let bridgeTotal = getTvlSingleAssetByBridge(bridgeData);
     // bridgeTotal = fmtGetTvlByChain(bridgeTotal)
     logJson(bridgeTotal)
 }
