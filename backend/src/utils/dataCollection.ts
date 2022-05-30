@@ -99,7 +99,7 @@ export function getTvlByChain(bridgeData) {
  * For every chain, will breakdown how much TVL comes from which bridges
  * @param bridgeData 
  */
-export function getTvlSingleChainSplitByBridge(bridgeData) {
+export function getTvlSingleChainByBridge(bridgeData) {
     let chainTvlByBridge = {}
     for (const bridgeInfo of bridgeData) {
         for (const chain in bridgeInfo.chainTvls) {
@@ -116,7 +116,7 @@ export function getTvlSingleChainSplitByBridge(bridgeData) {
  * For every chain, will breakdown how much TVL comes from which asset
  * @param bridgeData 
  */
-export function getTvlSingleChainSplitByAsset(bridgeData) {
+export function getTvlSingleChainByAsset(bridgeData) {
     let chainTvlByAsset = {}
     for (const bridgeInfo of bridgeData) {
         for (const chain in bridgeInfo.chainTvls) {

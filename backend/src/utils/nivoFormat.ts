@@ -1,5 +1,5 @@
-import { fetchAllBridgeData, getTvlByBridge, getTvlByChain, getTvlSingleChainSplitByBridge, 
-    getTvlSingleChainSplitByAsset, getTvlSingleAssetByBridge, getTvlSingleAssetByChain } from "./dataCollection";
+import { fetchAllBridgeData, getTvlByBridge, getTvlByChain, getTvlSingleChainByBridge, 
+    getTvlSingleChainByAsset, getTvlSingleAssetByBridge, getTvlSingleAssetByChain } from "./dataCollection";
 import { NivoLine } from "../types/typeUtils";
 import {logJson} from "./debugUtils";
 import * as bridgeJson from "../constants/bridges.json";
@@ -47,7 +47,7 @@ function fmtGetTvlByChain(tvlByChain): NivoLine[] {
  * Formats getTvlSingleChainSplitByBridge
  * @param chainTvlByBridge 
  */
-function fmtGetTvlSingleChainSplitByBridge(chainTvlByBridge) {
+function fmtGetTvlSingleChainByBridge(chainTvlByBridge) {
     let result = []
     for (const chain in chainTvlByBridge) {
         const chainTvlByBridgeSingleInfo = chainTvlByBridge[chain]
@@ -75,7 +75,7 @@ function fmtGetTvlSingleChainSplitByBridge(chainTvlByBridge) {
  * Formats getTvlSingleChainSplitByAsset
  * @param chainTvlByAsset 
  */
-function fmtGetTvlSingleChainSplitByAsset(chainTvlByAsset) {
+function fmtGetTvlSingleChainByAsset(chainTvlByAsset) {
     let result = []
     for (const chain in chainTvlByAsset) {
         const chainTvlByAssetSingleInfo = chainTvlByAsset[chain]
