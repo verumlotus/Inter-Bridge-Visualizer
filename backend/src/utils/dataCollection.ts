@@ -1,8 +1,6 @@
 import axios from "axios";
-import * as bridgeJson from "../constants/bridges.json";
 import { defiLlamaProtocolEndpoint } from '../constants/endpoints';
 import { TVL_TIMEFRAME } from "../constants/constants";
-import {logJson} from "./debugUtils";
 
 /**
  * @notice fetches the data for a given bridge
@@ -20,7 +18,7 @@ async function fetchBridgeData(bridge: string) {
  * 
  * @returns 
  */
-async function fetchAllBridgeData(bridges: string[]) : Promise<{}[]> {
+export async function fetchAllBridgeData(bridges: string[]) : Promise<{}[]> {
     let bridgeData = [];
     const _data = await Promise.all(bridges.map(fetchBridgeData))
     // Format and clean data a bit 
@@ -60,7 +58,7 @@ function cleanBridgeInfo(bridgeInfo) {
  * @param bridgeData {}[]
  * @returns bridge TVL, {}[]
  */
-function getTvlByBridge(bridgeData): any[] {
+export function getTvlByBridge(bridgeData): any[] {
     let bridgeTotalTvl = []
     for (const bridgeInfo of bridgeData) {
         bridgeTotalTvl.push({
@@ -76,7 +74,7 @@ function getTvlByBridge(bridgeData): any[] {
  * @param bridgeData 
  * @returns a json object with keys as the chain and historical data for the TVL of the entire chain across bridges
  */
-function getTvlByChain(bridgeData) {
+export function getTvlByChain(bridgeData) {
     let tvlByChain = {}
     for (const bridgeInfo of bridgeData) {
         for (const chain in bridgeInfo.chainTvls) {
@@ -101,7 +99,7 @@ function getTvlByChain(bridgeData) {
  * For every chain, will breakdown how much TVL comes from which bridges
  * @param bridgeData 
  */
-function getTvlSingleChainSplitByBridge(bridgeData) {
+export function getTvlSingleChainSplitByBridge(bridgeData) {
     let chainTvlByBridge = {}
     for (const bridgeInfo of bridgeData) {
         for (const chain in bridgeInfo.chainTvls) {
@@ -118,7 +116,7 @@ function getTvlSingleChainSplitByBridge(bridgeData) {
  * For every chain, will breakdown how much TVL comes from which asset
  * @param bridgeData 
  */
-function getTvlSingleChainSplitByAsset(bridgeData) {
+export function getTvlSingleChainSplitByAsset(bridgeData) {
     let chainTvlByAsset = {}
     for (const bridgeInfo of bridgeData) {
         for (const chain in bridgeInfo.chainTvls) {
@@ -150,7 +148,7 @@ function getTvlSingleChainSplitByAsset(bridgeData) {
  * @param bridgeData 
  * @returns 
  */
-function getTvlSingleAssetByBridge(bridgeData) {
+export function getTvlSingleAssetByBridge(bridgeData) {
     let assetTvlByBridge = {}
     for (const bridgeInfo of bridgeData) {
         for (const chain in bridgeInfo.chainTvls) {
@@ -183,7 +181,7 @@ function getTvlSingleAssetByBridge(bridgeData) {
  * @param bridgeData 
  * @returns 
  */
- function getTvlSingleAssetByChain(bridgeData) {
+ export function getTvlSingleAssetByChain(bridgeData) {
     let assetTvlByChain = {}
     for (const bridgeInfo of bridgeData) {
         for (const chain in bridgeInfo.chainTvls) {
@@ -210,13 +208,4 @@ function getTvlSingleAssetByBridge(bridgeData) {
     }
     return assetTvlByChain
 }
-
-
-async function runner() {
-    const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
-    const bridgeTotal = getTvlSingleAssetByChain(bridgeData);
-    logJson(bridgeTotal)
-}
-
-runner();
 
