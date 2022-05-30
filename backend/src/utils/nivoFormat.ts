@@ -44,7 +44,7 @@ function fmtGetTvlByChain(tvlByChain): NivoLine[] {
 }
 
 /**
- * Formats getTvlSingleChainSplitByBridge
+ * Formats getTvlSingleChainByBridge
  * @param chainTvlByBridge 
  */
 function fmtGetTvlSingleChainByBridge(chainTvlByBridge) {
@@ -72,7 +72,7 @@ function fmtGetTvlSingleChainByBridge(chainTvlByBridge) {
 }
 
 /**
- * Formats getTvlSingleChainSplitByAsset
+ * Formats getTvlSingleChainByAsset
  * @param chainTvlByAsset 
  */
 function fmtGetTvlSingleChainByAsset(chainTvlByAsset) {
@@ -158,8 +158,8 @@ function fmtGetTvlSingleChainByAsset(chainTvlByAsset) {
 
 async function runner() {
     const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
-    let bridgeTotal = getTvlSingleAssetByChain(bridgeData);
-    bridgeTotal = fmtGetTvlSingleAssetByChain(bridgeTotal)
+    let bridgeTotal = getTvlSingleChainByAsset(bridgeData);
+    bridgeTotal = fmtGetTvlSingleChainByAsset(bridgeTotal)
     logJson(bridgeTotal)
 }
 
