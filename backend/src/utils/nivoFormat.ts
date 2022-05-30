@@ -16,7 +16,7 @@ function fmtGetTvlByBridge(bridgeTotalTvl: {"name": string, "tvl": {"date": numb
         "id": bridgeInfo.name, 
         "data": bridgeInfo.tvl.map((tvlInfo) => ({
             "x": Number(tvlInfo.date), 
-            "y": tvlInfo.totalLiquidityUSD
+            "y": tvlInfo.totalLiquidityUSD.toFixed(2)
         }))
     }));
     return nivoLines;
@@ -34,7 +34,7 @@ function fmtGetTvlByChain(tvlByChain): NivoLine[] {
         for (const date in chainTvlInfo) {
             nivoData.push({
                 "x": Number(date), 
-                "y": chainTvlInfo[date].aggregateTvl
+                "y": chainTvlInfo[date].aggregateTvl.toFixed(2)
             })
         }
         let nivoLine = {"id": chain, "data": nivoData}
@@ -54,7 +54,7 @@ function fmtSingleGetTvlSingleChainSplitByBridge(chainTvlByBridgeSingleInfo): Ni
         for (const date in chainTvlByBridgeSingleInfo[bridge]) {
             nivoData.push({
                 "x": Number(date), 
-                "y": chainTvlByBridgeSingleInfo[bridge].totalLiquidityUSD
+                "y": chainTvlByBridgeSingleInfo[bridge].totalLiquidityUSD.toFixed(2)
             })
         }
         let nivoLine = {"id": bridge, "data": nivoData}
@@ -74,7 +74,7 @@ function fmtSingleGetTvlSingleChainSplitByAsset(chainTvlByAssetSingleInfo): Nivo
         for (const date in chainTvlByAssetSingleInfo[asset]) {
             nivoData.push({
                 "x": Number(date), 
-                "y": chainTvlByAssetSingleInfo[asset][date]
+                "y": chainTvlByAssetSingleInfo[asset][date].toFixed(2)
             })
         }
         let nivoLine = {"id": asset, "data": nivoData}
@@ -94,7 +94,7 @@ function fmtSingleGetTvlSingleChainSplitByAsset(chainTvlByAssetSingleInfo): Nivo
         for (const date in assetTvlByBridgeSingleInfo[bridge]) {
             nivoData.push({
                 "x": Number(date), 
-                "y": assetTvlByBridgeSingleInfo[bridge][date]
+                "y": assetTvlByBridgeSingleInfo[bridge][date].toFixed(2)
             })
         }
         let nivoLine = {"id": bridge, "data": nivoData}
@@ -114,7 +114,7 @@ function fmtSingleGetTvlSingleChainSplitByAsset(chainTvlByAssetSingleInfo): Nivo
         for (const date in assetTvlByChainSingleInfo[chain]) {
             nivoData.push({
                 "x": Number(date), 
-                "y": assetTvlByChainSingleInfo[chain][date]
+                "y": assetTvlByChainSingleInfo[chain][date].toFixed(2)
             })
         }
         let nivoLine = {"id": chain, "data": nivoData}
@@ -126,8 +126,8 @@ function fmtSingleGetTvlSingleChainSplitByAsset(chainTvlByAssetSingleInfo): Nivo
 
 async function runner() {
     const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
-    let bridgeTotal = getTvlSingleChainSplitByBridge(bridgeData);
-    bridgeTotal = fmtSingleGetTvlSingleChainSplitByBridge(bridgeTotal)
+    let bridgeTotal = getTvlByChain(bridgeData);
+    bridgeTotal = fmtGetTvlByChain(bridgeTotal)
     logJson(bridgeTotal)
 }
 

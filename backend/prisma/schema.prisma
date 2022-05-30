@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type TvlByBridgeData {
+  x Int
+  y Float
+}
+
+type TvlByChainData {
+  x Int
+  y String
+}
+
+model TvlByBridge {
+  id   String            @id @default(auto()) @map("_id") @db.ObjectId
+  data TvlByBridgeData[]
+  id_  String            @map("id")
+}
+
+model TvlByChain {
+  id   String           @id @default(auto()) @map("_id") @db.ObjectId
+  data TvlByChainData[]
+  id_  String           @map("id")
+}
