@@ -11,20 +11,38 @@ import * as bridgeJson from "../constants/bridges.json";
  * @param bridgeTotalTvl 
  */
 function fmtGetTvlByBridge(bridgeTotalTvl: {"name": string, "tvl": {"date": number, "totalLiquidityUSD": number}[]}[]): NivoLine[] {
-    let nivoData: NivoLine[] = []
-    nivoData = bridgeTotalTvl.map((bridgeInfo) => ({
+    let nivoLines: NivoLine[] = []
+    nivoLines = bridgeTotalTvl.map((bridgeInfo) => ({
         "id": bridgeInfo.name, 
         "data": bridgeInfo.tvl.map((tvlInfo) => ({
             "x": tvlInfo.date, 
             "y": tvlInfo.totalLiquidityUSD
         }))
     }));
-    return nivoData;
+    return nivoLines;
+}
+
+function fmtGetTvlByChain(tvlByChain): NivoLine[] {
+    let nivoLines: NivoLine[] = []
+    for (const chain in tvlByChain) {
+        const chainTvlInfo = tvlByChain[chain]
+        let nivoData: NivoLine["data"] = []
+        for (const date in chainTvlInfo) {
+            nivoData.push({
+                "x": date, 
+                "y": chainTvlInfo[date].aggregateTvl
+            })
+        }
+        let nivoLine = {"id": chain, "data": nivoData}
+        nivoLines.push(nivoLine)
+    }
+    return nivoLines
 }
 
 async function runner() {
     const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
-    const bridgeTotal = getTvlSingleAssetByChain(bridgeData);
+    let bridgeTotal = getTvlByChain(bridgeData);
+    bridgeTotal = fmtGetTvlByChain(bridgeTotal)
     logJson(bridgeTotal)
 }
 
