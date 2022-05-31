@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type TvlByBridgeData {
+  x Int
+  y String
+}
+
+type TvlByChainData {
+  x Int
+  y String
+}
+
+type TvlSingleAssetByBridgeBridgeTvlData {
+  data TvlSingleAssetByBridgeBridgeTvlDataData[]
+  id   String
+}
+
+type TvlSingleAssetByBridgeBridgeTvlDataData {
+  x Int
+  y String
+}
+
+type TvlSingleAssetByChainChainTvlData {
+  data TvlSingleAssetByChainChainTvlDataData[]
+  id   String
+}
+
+type TvlSingleAssetByChainChainTvlDataData {
+  x Int
+  y String
+}
+
+type TvlSingleChainByAssetAssetTvlData {
+  data TvlSingleChainByAssetAssetTvlDataData[]
+  id   String
+}
+
+type TvlSingleChainByAssetAssetTvlDataData {
+  x Int
+  y String
+}
+
+type TvlSingleChainByBridgeBridgeTvlData {
+  data TvlSingleChainByBridgeBridgeTvlDataData[]
+  id   String
+}
+
+type TvlSingleChainByBridgeBridgeTvlDataData {
+  x Int
+  y String
+}
+
+model TvlByBridge {
+  id   String            @id @default(auto()) @map("_id") @db.ObjectId
+  data TvlByBridgeData[]
+  bridge  String
+}
+
+model TvlByChain {
+  id   String           @id @default(auto()) @map("_id") @db.ObjectId
+  data TvlByChainData[]
+  chain  String           
+}
+
+model TvlSingleAssetByBridge {
+  id            String                                @id @default(auto()) @map("_id") @db.ObjectId
+  asset         String
+  bridgeTvlData TvlSingleAssetByBridgeBridgeTvlData[]
+}
+
+model TvlSingleAssetByChain {
+  id           String                              @id @default(auto()) @map("_id") @db.ObjectId
+  asset        String
+  chainTvlData TvlSingleAssetByChainChainTvlData[]
+}
+
+model TvlSingleChainByAsset {
+  id           String                              @id @default(auto()) @map("_id") @db.ObjectId
+  assetTvlData TvlSingleChainByAssetAssetTvlData[]
+  chain        String
+}
+
+model TvlSingleChainByBridge {
+  id            String                                @id @default(auto()) @map("_id") @db.ObjectId
+  bridgeTvlData TvlSingleChainByBridgeBridgeTvlData[]
+  chain         String
+}

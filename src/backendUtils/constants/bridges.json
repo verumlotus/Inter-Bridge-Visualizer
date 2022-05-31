@@ -1,0 +1,7 @@
+{
+    "bridges": [
+        "stargate",
+        "nomad", 
+        "connext"
+    ]
+}
