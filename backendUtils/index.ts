@@ -35,7 +35,7 @@ app.get('/assetTvlByBridge/:asset', async (req, res) => {
 })
 
 // 6. Asset TVL by Chain
-app.get('/assetTvlByBridge/:asset', async (req, res) => {
+app.get('/assetTvlByChain/:asset', async (req, res) => {
     res.send(await dbGetAssetTvlByChain(req.params.asset))
 })
 
