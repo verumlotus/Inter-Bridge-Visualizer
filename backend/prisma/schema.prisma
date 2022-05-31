@@ -60,13 +60,13 @@ type TvlSingleChainByBridgeBridgeTvlDataData {
 model TvlByBridge {
   id   String            @id @default(auto()) @map("_id") @db.ObjectId
   data TvlByBridgeData[]
-  id_  String            @map("id")
+  bridge  String
 }
 
 model TvlByChain {
   id   String           @id @default(auto()) @map("_id") @db.ObjectId
   data TvlByChainData[]
-  id_  String           @map("id")
+  chain  String           
 }
 
 model TvlSingleAssetByBridge {

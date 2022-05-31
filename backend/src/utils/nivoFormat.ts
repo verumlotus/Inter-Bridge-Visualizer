@@ -1,8 +1,4 @@
-import { fetchAllBridgeData, getTvlByBridge, getTvlByChain, getTvlSingleChainByBridge, 
-    getTvlSingleChainByAsset, getTvlSingleAssetByBridge, getTvlSingleAssetByChain } from "./dataCollection";
 import { NivoLine } from "../types/typeUtils";
-import {logJson} from "./debugUtils";
-import * as bridgeJson from "../constants/bridges.json";
 
 // This file contains logic to format bridge data according to the nivo.js charting library
 
@@ -10,10 +6,10 @@ import * as bridgeJson from "../constants/bridges.json";
  * Formats getTvlByBridge
  * @param bridgeTotalTvl 
  */
-function fmtGetTvlByBridge(bridgeTotalTvl: {"name": string, "tvl": {"date": number, "totalLiquidityUSD": number}[]}[]): NivoLine[] {
-    let nivoLines: NivoLine[] = []
+export function fmtGetTvlByBridge(bridgeTotalTvl: {"name": string, "tvl": {"date": number, "totalLiquidityUSD": number}[]}[]) {
+    let nivoLines = []
     nivoLines = bridgeTotalTvl.map((bridgeInfo) => ({
-        "id": bridgeInfo.name, 
+        "bridge": bridgeInfo.name, 
         "data": bridgeInfo.tvl.map((tvlInfo) => ({
             "x": Number(tvlInfo.date), 
             "y": tvlInfo.totalLiquidityUSD.toFixed(2)
@@ -26,8 +22,8 @@ function fmtGetTvlByBridge(bridgeTotalTvl: {"name": string, "tvl": {"date": numb
  * Formats getTvlByChain
  * @param tvlByChain 
  */
-function fmtGetTvlByChain(tvlByChain): NivoLine[] {
-    let nivoLines: NivoLine[] = []
+export function fmtGetTvlByChain(tvlByChain) {
+    let nivoLines = []
     for (const chain in tvlByChain) {
         const chainTvlInfo = tvlByChain[chain]
         let nivoData: NivoLine["data"] = []
@@ -37,7 +33,7 @@ function fmtGetTvlByChain(tvlByChain): NivoLine[] {
                 "y": chainTvlInfo[date].aggregateTvl.toFixed(2)
             })
         }
-        let nivoLine = {"id": chain, "data": nivoData}
+        let nivoLine = {"chain": chain, "data": nivoData}
         nivoLines.push(nivoLine)
     }
     return nivoLines
@@ -47,7 +43,7 @@ function fmtGetTvlByChain(tvlByChain): NivoLine[] {
  * Formats getTvlSingleChainByBridge
  * @param chainTvlByBridge 
  */
-function fmtGetTvlSingleChainByBridge(chainTvlByBridge) {
+export function fmtGetTvlSingleChainByBridge(chainTvlByBridge) {
     let result = []
     for (const chain in chainTvlByBridge) {
         const chainTvlByBridgeSingleInfo = chainTvlByBridge[chain]
@@ -75,7 +71,7 @@ function fmtGetTvlSingleChainByBridge(chainTvlByBridge) {
  * Formats getTvlSingleChainByAsset
  * @param chainTvlByAsset 
  */
-function fmtGetTvlSingleChainByAsset(chainTvlByAsset) {
+export function fmtGetTvlSingleChainByAsset(chainTvlByAsset) {
     let result = []
     for (const chain in chainTvlByAsset) {
         const chainTvlByAssetSingleInfo = chainTvlByAsset[chain]
@@ -103,7 +99,7 @@ function fmtGetTvlSingleChainByAsset(chainTvlByAsset) {
  * Formats getTvlSingleAssetByBridge
  * @param assetTvlByBridge 
  */
- function fmtGetTvlSingleAssetByBridge(assetTvlByBridge) {
+ export function fmtGetTvlSingleAssetByBridge(assetTvlByBridge) {
     let result = []
     for (const asset in assetTvlByBridge) {
         const assetTvlByBridgeSingleInfo = assetTvlByBridge[asset]
@@ -131,7 +127,7 @@ function fmtGetTvlSingleChainByAsset(chainTvlByAsset) {
  * Formats getTvlSingleAssetByChain
  * @param assetTvlByChain 
  */
- function fmtGetTvlSingleAssetByChain(assetTvlByChain) {
+ export function fmtGetTvlSingleAssetByChain(assetTvlByChain) {
     let result = []
     for (const asset in assetTvlByChain) {
         const assetTvlByChainSingleInfo = assetTvlByChain[asset]
@@ -156,11 +152,11 @@ function fmtGetTvlSingleChainByAsset(chainTvlByAsset) {
 }
 
 
-async function runner() {
-    const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
-    let bridgeTotal = getTvlSingleChainByAsset(bridgeData);
-    bridgeTotal = fmtGetTvlSingleChainByAsset(bridgeTotal)
-    logJson(bridgeTotal)
-}
+// async function runner() {
+//     const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
+//     let bridgeTotal = getTvlSingleChainByAsset(bridgeData);
+//     bridgeTotal = fmtGetTvlSingleChainByAsset(bridgeTotal)
+//     logJson(bridgeTotal)
+// }
 
-runner();
+// runner();
