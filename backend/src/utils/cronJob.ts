@@ -81,6 +81,6 @@ async function runCronJob() {
     ])
 }
 
-runCronJob().then(() => {
-    prisma.$disconnect();
+runCronJob().finally(async () => {
+    await prisma.$disconnect();
 });
