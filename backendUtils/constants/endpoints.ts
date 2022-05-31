@@ -1,1 +1,0 @@
-export const defiLlamaProtocolEndpoint = "https://api.llama.fi/protocol/";

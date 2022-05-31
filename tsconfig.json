@@ -4,7 +4,6 @@
     "module": "commonjs",
     "lib": [
       "dom",
-      "dom.iterable",
       "esnext"
     ],
     "allowJs": true,
@@ -23,9 +22,6 @@
     "jsx": "preserve"
   },
   "include": [
-    "backendUtils/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+      "src/*"
+    ]
 }
