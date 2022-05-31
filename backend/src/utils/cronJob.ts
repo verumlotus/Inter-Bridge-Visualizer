@@ -36,7 +36,7 @@ async function runCronJob() {
         })
     ])
 
-    // 3. Chain TVL by bridge
+    // 3. Chain TVL by Bridge
     let chainTvlByBridgeData = getTvlSingleChainByBridge(bridgeData);
     chainTvlByBridgeData = fmtGetTvlSingleChainByBridge(chainTvlByBridgeData)
     // Create a DB transaction to delete and then create 
@@ -69,7 +69,7 @@ async function runCronJob() {
         })
     ])
 
-    // 5. Asset TVL by Chain
+    // 6. Asset TVL by Chain
     let assetTvlByChain = getTvlSingleAssetByChain(bridgeData);
     assetTvlByChain = fmtGetTvlSingleAssetByChain(assetTvlByChain)
     // Create a DB transaction to delete and then create 
