@@ -23,7 +23,7 @@
   },
   "include": [
     "src/*"
-  ],
+, "pages", "backendUtils"  ],
   "exclude": [
     "node_modules"
   ]
