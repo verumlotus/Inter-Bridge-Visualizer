@@ -82,5 +82,6 @@ async function runCronJob() {
 }
 
 runCronJob().finally(async () => {
+    // TODO add a .catch() and log using Sentry
     await prisma.$disconnect();
 });
