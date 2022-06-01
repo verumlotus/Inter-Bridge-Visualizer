@@ -18,7 +18,7 @@ export default function TvlByBridge() {
     const { data, error } = useSWR(URL, fetcher)
 
     return (
-        <div style={{height: "55vh", width: "90vw"}}>
+        <div style={{height: "65vh", width: "90vw"}}>
             <h2>
                 Compare the TVL of bridges
             </h2>
