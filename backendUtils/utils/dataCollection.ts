@@ -78,6 +78,9 @@ export function getTvlByChain(bridgeData) {
     let tvlByChain = {}
     for (const bridgeInfo of bridgeData) {
         for (const chain in bridgeInfo.chainTvls) {
+            if (chain == "pool2" || chain == "Ethereum-pool2") {
+                continue;
+            }
             if (!(chain in tvlByChain)) {
                 tvlByChain[chain] = {}
             }

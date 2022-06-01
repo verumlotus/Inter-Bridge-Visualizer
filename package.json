@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "cronJob": "npx ts-node src/utils/cronJob.ts"
+    "cronJob": "npx ts-node backendUtils/utils/cronJob.ts"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
