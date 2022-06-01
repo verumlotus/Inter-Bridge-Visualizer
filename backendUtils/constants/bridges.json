@@ -2,6 +2,10 @@
     "bridges": [
         "stargate",
         "nomad", 
-        "connext"
+        "synapse",
+        "multichain",
+        "hop-protocol",
+        "cbridge",
+        "renvm"
     ]
 }
