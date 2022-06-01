@@ -46,7 +46,7 @@ export default function TvlByBridge() {
                         stacked: false,
                         reverse: false
                     }}
-                    yFormat={">+.2g"}
+                    yFormat={">.2~g"}
                     colors={{ scheme: "category10" }}
                     enableArea={true}
                     enablePoints={false}
@@ -75,6 +75,8 @@ export default function TvlByBridge() {
                         legendOffset: -50,
                         legendPosition: 'middle'
                     }}
+                    enableSlices={"x"}
+                    isInteractive={true}
                     legends={[
                         {
                             anchor: 'bottom-right',
