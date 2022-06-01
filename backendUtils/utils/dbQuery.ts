@@ -1,5 +1,4 @@
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import prisma from '../dbAccess';
 
 export async function dbGetTvlByBridge() {
     return await prisma.tvlByBridge.findMany();

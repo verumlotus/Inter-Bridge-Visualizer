@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import * as assetsJson from "../backendUtils/constants/assets.json";
+import assetsJson from "../backendUtils/constants/assets.json";
 import LineChart from "../components/LineChart";
 import SearchBar from "../components/SearchBar";
 

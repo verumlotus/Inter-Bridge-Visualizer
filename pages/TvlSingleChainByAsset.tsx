@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import * as chainsJson from "../backendUtils/constants/chains.json";
+import chainsJson from "../backendUtils/constants/chains.json";
 import LineChart from "../components/LineChart";
 import SearchBar from "../components/SearchBar";
 

@@ -1,5 +1,4 @@
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import prisma from '../dbAccess';
 
 async function temp() {
     const data = await prisma.tvlSingleAssetByBridge.findMany()
