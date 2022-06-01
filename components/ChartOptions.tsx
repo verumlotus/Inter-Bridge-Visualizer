@@ -1,6 +1,4 @@
-import { Tabs, Tab, AppBar } from "@mui/material"
-import Box from '@mui/material/Box';
-
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -55,6 +53,7 @@ const StyledMenu = styled((props: MenuProps) => (
 }));
 
 export default function ChartOptions() {
+  const router = useRouter()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -87,22 +86,23 @@ export default function ChartOptions() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} disableRipple>
-          <EditIcon />
-          Edit
+        <MenuItem onClick={() => router.push("/TvlByBridge")} disableRipple>
+          TVL By Bridge
         </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <FileCopyIcon />
-          Duplicate
+        <MenuItem onClick={() => router.push("/TvlByChain")} disableRipple>
+          TVL By Chain
         </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={handleClose} disableRipple>
-          <ArchiveIcon />
-          Archive
+        <MenuItem onClick={() => router.push("/TvlSingleChainByBridge")} disableRipple>
+          Single Chain TVL By Bridge
         </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <MoreHorizIcon />
-          More
+        <MenuItem onClick={() => router.push("/TvlSingleChainByAsset")} disableRipple>
+          Single Chain TVL By Asset
+        </MenuItem>
+        <MenuItem onClick={() => router.push("/TvlSingleAssetByBridge")} disableRipple>
+          Single Asset TVL By Bridge
+        </MenuItem>
+        <MenuItem onClick={() => router.push("/TvlSingleAssetByChain")} disableRipple>
+          Single Asset TVL By Chain
         </MenuItem>
       </StyledMenu>
     </div>
