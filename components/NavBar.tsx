@@ -15,7 +15,7 @@ import ChartOptions from './ChartOptions'
 
 export default function NavBar() {
   return (
-    <Box sx={{ flexDirection: "row", justifyContent: "center", alignContent: "center", display: "flex", minWidth: "100vw"}}>
+    <Box sx={{ flexDirection: "row", justifyContent: "center", alignContent: "center", display: "flex", minWidth: "100vw", backgroundColor: "#faf0e6"}}>
           {/* <IconButton
             size="large"
             edge="start"
