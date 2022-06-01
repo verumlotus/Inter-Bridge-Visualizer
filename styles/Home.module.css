@@ -14,10 +14,12 @@
 
 .footer {
   display: flex;
+  flex-direction: row;
+  min-width: 100vw;
   flex: 1;
-  padding: 10rem 0 0 0;
+  padding: 10rem 5rem 0 0;
   border-top: 1px solid #eaeaea;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
 }
 
