@@ -2,6 +2,7 @@ import NavBar from './NavBar'
 import Footer from './Footer'
 import styles from '../styles/Home.module.css'
 import Head from 'next/head'
+import Faq from './Faq'
 
 export default function Layout({ children }) {
   return (
@@ -14,6 +15,7 @@ export default function Layout({ children }) {
       <main className={styles.main}>
         <NavBar />
         {children}
+        <Faq/>
         <Footer />
       </main>
     </div>
