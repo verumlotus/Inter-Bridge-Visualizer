@@ -9,8 +9,9 @@ async function fetcher(url: string) {
         bridgeInfo['id'] = bridgeInfo['chain']
         delete bridgeInfo['chain']
     }
-    console.log(response.data)
-    return response.data;
+    return response.data.sort((a, b) => {
+        return Number(a['data'].at(-1)['y']) > Number(b['data'].at(-1)['y'])
+    }).slice(0, 15)
 }
 
 export default function TvlByBridge() {

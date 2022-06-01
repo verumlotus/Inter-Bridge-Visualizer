@@ -46,6 +46,7 @@ export default function LineChart(props: {data: any}){
                 legendOffset: -50,
                 legendPosition: 'middle'
             }}
+            // useMesh={true}
             enableSlices={"x"}
             isInteractive={true}
             legends={[

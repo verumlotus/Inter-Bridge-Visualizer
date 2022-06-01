@@ -6,16 +6,20 @@ import SearchBar from "../components/SearchBar";
 
 const chains = chainsJson["chains"]
 
-export default function TvlSingleChainByBridge() {
+export default function TvlSingleChainByAsset() {
     let [chain, setChain] = useState("Ethereum")
     let [data, setData] = useState([]);
 
-    const URL_PREFIX = "/api/chainTvlByBridge";
+    const URL_PREFIX = "/api/chainTvlByAsset";
     useEffect(() => {
         async function fetcher(urlPrefix: string) {
             let url = `${urlPrefix}/${chain}`
             const response = await axios.get(url);
-            setData(response.data['bridgeTvlData']);
+            // Sort to filter only by top 12 assets
+            const result = response.data['assetTvlData'].sort((a, b) => {
+                return Number(a['data'].at(-1)['y']) > Number(b['data'].at(-1)['y'])
+            }).slice(0, 15)
+            setData(result);
         }
         if (chain) {
             fetcher(URL_PREFIX);
@@ -31,7 +35,7 @@ export default function TvlSingleChainByBridge() {
     return (
         <div style={{height: "65vh", width: "90vw"}}>
             <h2>
-                Single Chain TVL By Bridge. Current data is for {chain}
+                Single Chain TVL By Asset. Current data is for {chain}
             </h2>
             <p>
                 Explanation of what questions this can answer go here!
