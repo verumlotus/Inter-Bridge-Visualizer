@@ -38,7 +38,7 @@ export default function TvlSingleAssetByChain() {
                 Single Asset TVL By Chain. Current data is for {asset}
             </h2>
             <p>
-                Explanation of what questions this can answer go here!
+                “For a certain asset, what chains is that asset being bridge from/to?”
             </p>
             <SearchBar
                 options={assets}

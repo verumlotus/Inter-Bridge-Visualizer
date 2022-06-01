@@ -23,7 +23,7 @@ export default function TvlByBridge() {
                 Compare the TVL of bridges
             </h2>
             <p>
-                Explanation of what questions this can answer go here!
+                “How do bridges compare to each other in terms of TVL (across all chains and all assets)?
             </p>
             {!error && data &&(
                 <LineChart data={data}/>

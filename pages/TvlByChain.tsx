@@ -25,7 +25,7 @@ export default function TvlByBridge() {
                 Compare the bridged TVL of Chains
             </h2>
             <p>
-                Explanation of what questions this can answer go here!
+                “For a certain chain, across all bridges what is the TVL on that chain?” We count assets bridge <i>from</i> and <i>to</i> this chain.
             </p>
             {!error && data &&(
                 <LineChart data={data}/>

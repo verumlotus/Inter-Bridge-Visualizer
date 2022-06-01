@@ -38,7 +38,7 @@ export default function TvlSingleAssetByBridge() {
                 Single Asset TVL By Bridge. Current data is for {asset}
             </h2>
             <p>
-                Explanation of what questions this can answer go here!
+                “For a certain asset, what bridges are used to bridge that coin?”
             </p>
             <SearchBar
                 options={assets}

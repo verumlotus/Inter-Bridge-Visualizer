@@ -38,7 +38,7 @@ export default function TvlSingleChainByAsset() {
                 Single Chain TVL By Asset. Current data is for {chain}
             </h2>
             <p>
-                Explanation of what questions this can answer go here!
+                “For a certain chain, what is the breakdown of TVL by asset (across all bridges)?”
             </p>
             <SearchBar
                 options={chains}
