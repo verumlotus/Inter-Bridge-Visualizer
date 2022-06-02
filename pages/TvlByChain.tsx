@@ -9,12 +9,13 @@ async function fetcher(url: string) {
         bridgeInfo['id'] = bridgeInfo['chain']
         delete bridgeInfo['chain']
     }
-    return response.data.sort((a, b) => {
-        return Number(a['data'].at(-1)['y']) > Number(b['data'].at(-1)['y'])
-    }).slice(0, 15)
+    const result = response.data.sort((a, b) => {
+        return Number(b['data'].at(-1)['y']) - Number(a['data'].at(-1)['y'])
+    }).slice(0,15)
+    return result;
 }
 
-export default function TvlByBridge() {
+export default function TvlByChain() {
     // Retrieve the data
     const URL = "/api/tvlByChain";
     const { data, error } = useSWR(URL, fetcher)

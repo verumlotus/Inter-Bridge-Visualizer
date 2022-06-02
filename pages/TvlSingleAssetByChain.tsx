@@ -17,7 +17,7 @@ export default function TvlSingleAssetByChain() {
             const response = await axios.get(url);
             // Sort to filter only by top 12 assets
             const result = response.data['chainTvlData'].sort((a, b) => {
-                return Number(a['data'].at(-1)['y']) > Number(b['data'].at(-1)['y'])
+                return Number(b['data'].at(-1)['y']) - Number(a['data'].at(-1)['y'])
             }).slice(0, 15)
             setData(result);
         }
