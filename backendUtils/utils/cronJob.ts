@@ -6,7 +6,7 @@ import {logJson} from "./debugUtils";
 import * as bridgeJson from "../constants/bridges.json";
 import prisma from '../dbAccess';
 
-async function runCronJob() {
+export default async function runCronJob(params) {
     // Fetch data for all bridges
     const bridgeData = await fetchAllBridgeData(bridgeJson.bridges);
     // Now, for every graph we wish to create let's parse, format, and store data in our DB
@@ -77,7 +77,7 @@ async function runCronJob() {
     ])
 }
 
-runCronJob().finally(async () => {
-    // TODO add a .catch() and log using Sentry
-    await prisma.$disconnect();
-});
+// runCronJob(null).finally(async () => {
+//     // TODO add a .catch() and log using Sentry
+//     await prisma.$disconnect();
+// });
